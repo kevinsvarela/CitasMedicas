@@ -1,0 +1,65 @@
+<h2 mat-dialog-title class="py-5! text-center font-bold!"> {{titulo}} </h2>
+<mat-divider class= "border-2"></mat-divider>
+<mat-dialog-content>
+    <form id="frmMedico" [formRoot]="frmMedico" (submit)="guardar($event)" class="grid gap-4 py-2">
+        <mat-form-field appearance="outline">
+                <mat-label>Especialidad</mat-label>
+                <input matInput type="number" placeholder="ID especialidad" [formField]="frmMedico.especialidad_id">
+                @if (frmMedico.especialidad_id().touched() && frmMedico.especialidad_id().invalid()) {
+                    @for (error of frmMedico.especialidad_id().errors(); track error.kind) {
+                        <mat-error>{{error.message}}</mat-error>
+                    }
+                }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" placeholder="Nombre completo" [formField]="frmMedico.nombre_completo">
+                @if (frmMedico.nombre_completo().touched() && frmMedico.nombre_completo().invalid()) {
+                    @for (error of frmMedico.nombre_completo().errors(); track error.kind) {
+                        <mat-error>{{error.message}}</mat-error>
+                    }
+                }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Licencia</mat-label>
+                <input matInput type="text" placeholder="Licencia" [formField]="frmMedico.licencia">
+                @if (frmMedico.licencia().touched() && frmMedico.licencia().invalid()) {
+                    @for (error of frmMedico.licencia().errors(); track error.kind) {
+                        <mat-error>{{error.message}}</mat-error>
+                    }
+                }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Telefono</mat-label>
+                <input matInput type="text" placeholder="Telefono" [formField]="frmMedico.telefono!">
+                @if (frmMedico.telefono!().touched() && frmMedico.telefono!().invalid()) {
+                    @for (error of frmMedico.telefono!().errors(); track error.kind) {
+                        <mat-error>{{error.message}}</mat-error>
+                    }
+                }
+            </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Usuario</mat-label>
+                <input matInput type="text" placeholder="Nombre de usuario" [formField]="frmMedico.username!">
+                @if (frmMedico.username!().touched() && frmMedico.username!().invalid()) {
+                    @for (error of frmMedico.username!().errors(); track error.kind) {
+                        <mat-error>{{error.message}}</mat-error>
+                    }
+                }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Password" [formField]="frmMedico.password!">
+                @if (frmMedico.password!().touched() && frmMedico.password!().invalid()) {
+                    @for (error of frmMedico.password!().errors(); track error.kind) {
+                        <mat-error>{{error.message}}</mat-error>
+                    }
+                }
+            </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-divider class= "border-2"></mat-divider>
+<mat-dialog-actions>
+    <button mat-button type="button" (click)="dialogRef.close()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" form="frmMedico">Guardar</button>
+</mat-dialog-actions>

@@ -1,0 +1,37 @@
+<form [formRoot] = "frmLogin">
+    <mat-card>
+        <mat-card-header class="h-15 flex item-center, justify-center mb-4 bg-blue-700 text-white">
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex flex-col">
+                <mat-form-field appearance="fill" class="mt-4 mx-5">
+                    <mat-label>Usuario</mat-label>
+                    <input type="text" matInput [formField]="frmLogin.username" (focus)="mostrarError.set(false);">
+                </mat-form-field>
+                @if(frmLogin.username().touched() && frmLogin.username().invalid()) {
+                    @for(error of frmLogin.username().errors(); track error.kind ) {
+                        <mat-error class="ml-5">{{error.message}}</mat-error>
+                    }
+                }
+                <mat-form-field appearance="fill" class="mt-4 mx-5">
+                    <mat-label>Contraseña</mat-label>
+                    <input type="password" matInput [formField]="frmLogin.password" (focus)="mostrarError.set(false);">
+                </mat-form-field>
+                @if(frmLogin.password().touched() && frmLogin.password().invalid()) {
+                    @for(error of frmLogin.password().errors(); track error.kind ) {
+                        <mat-error class="ml-5">{{error.message}}</mat-error>
+                    }
+                }                             
+            </div>
+            <mat-error class="text-center" [hidden]="!mostrarError()">Usuario o contraseña incorrecto</mat-error>
+        </mat-card-content>
+        
+        <mat-card-actions class="mb-5">
+            <button type="submit" matFab extended  class="flex flex-1 mx-7 bg-emerald-600! text-white!"
+                [disabled]="frmLogin().invalid()">
+                Iniciar Sesión
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

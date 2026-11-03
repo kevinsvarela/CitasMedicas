@@ -1,0 +1,54 @@
+@host = http://localhost:9090/api
+@uri = {{host}}/medicos
+
+@token= eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjaXRhcy1tZWRpY2FzLWJ1c2luZXNzIiwiaWF0IjoxNzkxMzg3NzYzLCJleHAiOjE3OTEzOTEzNjMsInN1YiI6IjEiLCJ1c2VybmFtZSI6ImtldmluMTIzIiwicm9sX2lkIjoyfQ.ldw5By8oAWYpre6uxJaCJKN6Cvqvh5nP2VzSRHTJS2A
+
+GET {{uri}}
+Authorization: Bearer {{token}}
+###
+
+POST {{uri}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "especialidad_id": 1,
+    "nombre_completo": "Jose Brenes",
+    "licencia": "LIC-1274156745",
+    "telefono": "6275-8597",
+    "username": "jbrenes01",
+    "password": "Jose123456@"
+}
+
+###
+
+PUT {{uri}}/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "especialidad_id": 2,
+    "nombre_completo": "Kevin Simpson",
+    "telefono": "7215-6424"
+}
+
+###
+
+DELETE {{uri}}/6
+Authorization: Bearer {{token}}
+
+###
+
+GET {{uri}}/filter/0/10?nombre=&cedula=&especialidad=
+Authorization: Bearer {{token}}
+
+###
+
+POST http://localhost:9090/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "kevin123",
+    "password": "germaine123"
+}
+###

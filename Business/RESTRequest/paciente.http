@@ -1,0 +1,235 @@
+@host = http://localhost:9090/api
+@uri = {{host}}/pacientes
+
+@token= eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjaXRhcy1tZWRpY2FzLWJ1c2luZXNzIiwiaWF0IjoxNzkwNzgwMzY2LCJleHAiOjE3OTA3ODM5NjYsInN1YiI6IjIiLCJ1c2VybmFtZSI6Imdlcm1haW5lMDI4Iiwicm9sX2lkIjozfQ.EkhMQVqO9Et_1WgU3hFEoKYoPbFmWNBhuYkmBgDJrSY
+
+###
+# 1. EXITOSA: cédula nacional con todos los campos (espera 201)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "598756123",
+    "nombre_completo": "Roberto Pascuarelli",
+    "fecha_nacimiento": "2002-12-27",
+    "telefono": "6045-2748",
+    "username": "robertpascua",
+    "password": "Pascuarelli2026@"
+}
+
+###
+GET {{uri}}
+Authorization: Bearer {{token}}
+
+###
+GET {{uri}}/9
+Authorization: Bearer {{token}}
+
+### 
+GET {{uri}}/filter/0/10?nombre=germaine&cedula=
+Authorization: Bearer {{token}}
+
+### 
+PUT {{uri}}/12
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "telefono": "8215-6594"
+}
+
+### 
+DELETE {{uri}}/8
+Authorization: Bearer {{token}}
+
+
+############ LAB 3: VALIDACIONES DEL POST ############
+
+###
+# 2. EXITOSA: DIMEX de 12 dígitos que inicia con 5 y sin teléfono (espera 201)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "512345678901",
+    "nombre_completo": "Maria Lopez Ruiz",
+    "fecha_nacimiento": "1990-05-15",
+    "username": "marialopez01",
+    "password": "Kevin1234@"
+}
+
+###
+# 3. ERROR: JSON inválido (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# 4. ERROR: cédula con menos dígitos (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "12345678",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-12-28",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 5. ERROR: cédula con guiones (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "7-0123-0456",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-12-28",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 6. ERROR: cédula ausente (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-12-28",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 7. ERROR: nombre con números (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Kevin123 Simpson",
+    "fecha_nacimiento": "2002-12-28",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 8. ERROR: nombre muy corto (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Ana",
+    "fecha_nacimiento": "2002-12-28",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 9. ERROR: teléfono sin guión (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-12-28",
+    "telefono": "72156859",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 10. ERROR: teléfono que inicia con 9 (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-12-28",
+    "telefono": "9215-6859",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 11. ERROR: fecha con formato incorrecto (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "28-12-2002",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 12. ERROR: fecha inexistente (espera 400)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-02-30",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 13. ERROR: varios campos inválidos a la vez (espera 400 con 4 errores)
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "cedula": "abc",
+    "nombre_completo": "X",
+    "fecha_nacimiento": "hoy",
+    "telefono": "123",
+    "username": "kevinsimpson01",
+    "password": "Kevin1234@"
+}
+
+###
+# 14. ERROR: sin token (espera 401, la petición no llega al validador)
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "cedula": "701230456",
+    "nombre_completo": "Kevin Simpson Varela",
+    "fecha_nacimiento": "2002-12-28"
+}
+
+
+############ LOGIN ############
+
+###
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "germaine028",
+    "password": "germaine012345"
+}
+
+###

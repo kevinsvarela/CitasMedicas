@@ -1,0 +1,35 @@
+@host = http://localhost:8080/api
+@uri = {{host}}/citas
+
+GET {{uri}}/paciente/6
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "paciente_id": 6,
+    "medico_id": 2,
+    "fecha_hora": "2023-10-10 10:00:00",
+    "motivo": "Examen de rutina"
+}
+###
+
+PUT {{uri}}/1
+Content-Type: application/json
+
+{
+    "fecha_hora": "2023-10-10 10:00:00",
+    "motivo": "Examen de rutina"
+}
+
+###
+
+DELETE {{uri}}/1
+Content-Type: application/json
+
+###
+
+GET {{uri}}/filter/0/10?nombre=&cedula=&especialidad=car
+
+###

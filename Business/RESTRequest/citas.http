@@ -1,0 +1,58 @@
+@host = http://localhost:9090/api
+@uri = {{host}}/citas
+
+@token= eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjaXRhcy1tZWRpY2FzLWJ1c2luZXNzIiwiaWF0IjoxNzkwNzgzODQwLCJleHAiOjE3OTA3ODc0NDAsInN1YiI6IjEiLCJ1c2VybmFtZSI6ImtldmluMTIzIiwicm9sX2lkIjoyfQ.d5MmJ8Ha_qpzPs63bxF2h-97t_r2KEFRU2hlW6syv7s
+
+GET {{uri}}/medico/1
+Authorization: Bearer {{token}}
+
+###
+
+GET {{uri}}/paciente/1
+Authorization: Bearer {{token}}
+
+###
+
+POST {{uri}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "paciente_id": 2,
+    "medico_id": 1,
+    "fecha_hora": "2023-10-10 11:00:00",
+    "motivo": "Acné"
+}
+###
+
+PUT {{uri}}/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+{
+    "fecha_hora": "2023-10-10 10:00:00",
+    "motivo": "Examen de rutina"
+}
+
+###
+
+DELETE {{uri}}/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{uri}}/filter/0/10?nombre=&cedula=&especialidad=car
+Authorization: Bearer {{token}}
+
+
+###
+
+POST http://localhost:9090/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "kevin123",
+    "password": "germaine123"
+}

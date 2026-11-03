@@ -1,0 +1,80 @@
+<mat-card>
+  <div class="p-6 bg-white border-5 border-gray-200 rounded-lg shadow-sm">
+  <mat-card-header class="bg-gray-200 h-13 justify-center">
+    <mat-card-title class="font-extrabold! text-[1.5rem]!">
+      Catálogo Médicos
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="relative overflow-x-auto shadow-sm sm:rounded-lg">
+   <table mat-table [dataSource]="dataSource()" class="mat-shadow-2">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="nombre_completo">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.nombre_completo}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="especialidad_nombre">
+    <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.especialidad_nombre}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="licencia">
+    <th mat-header-cell *matHeaderCellDef> Licencia </th>
+    <td mat-cell *matCellDef="let element"> {{element.licencia}} </td>
+  </ng-container>
+
+   <!-- Teléfono Column -->
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef> Telefono </th>
+    <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+  </ng-container>
+
+   <!-- Botonera Column -->
+  <ng-container matColumnDef="botonera">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> 
+    <button (click)="onCreate()" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+        <mat-icon>add</mat-icon>
+    </button>
+  </th>
+    <td mat-cell *matCellDef="let medico"> 
+      <div class="flex justify-center gap-1">
+        <button (click)="onInfo(medico.id)" class=" flex content-center items-center focus:outline-none text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 dark:bg-blue-600 dark:hover:bg-blue-800 dark:focus:ring-blue-900 cursor-pointer">
+          <mat-icon>info</mat-icon>
+        </button>
+        <button (click)="onEdit(medico.id)" class=" flex content-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 cursor-pointer">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="onResetPassword(medico.id)" class=" flex content-center items-center focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-2 py-1 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 cursor-pointer"> 
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button (click)="onDelete(medico.id)" class=" flex content-center items-center focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-2 py-1 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 cursor-pointer">
+          <mat-icon>key</mat-icon>
+        </button>
+    </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table> 
+</mat-card-content>
+</div>
+<mat-card-footer class="flex justify-end p-3">
+  <button matFab extended class = "mr-2">Filtrar<mat-icon>filter_list</mat-icon></button>
+  <button matFab extended>Imprimir<mat-icon>printer</mat-icon></button>
+</mat-card-footer>
+</mat-card>
+
+
