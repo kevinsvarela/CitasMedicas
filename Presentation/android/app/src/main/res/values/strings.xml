@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">citas-medicas</string>
+    <string name="title_activity_main">citas-medicas</string>
+    <string name="package_name">com.kevinsimpson.citasmedicas</string>
+    <string name="custom_url_scheme">com.kevinsimpson.citasmedicas</string>
+</resources>

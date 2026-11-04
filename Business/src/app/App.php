@@ -2,9 +2,9 @@
 
 use Slim\Factory\AppFactory;
 use DI\Container;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use JimTools\JwtAuth\Decoder\FirebaseDecoder;
 use JimTools\JwtAuth\Exceptions\AuthorizationException;
 use JimTools\JwtAuth\Middleware\JwtAuthentication;
@@ -45,7 +45,7 @@ $errorMiddleware->setErrorHandler(AuthorizationException::class,
         return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
     }
 );
-
+/* 
 $app->add(function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($app): ResponseInterface {
 	$origin = $request->getHeaderLine('Origin');
 	$allowedOrigin = $_ENV['CORS_ALLOWED_ORIGIN'] ?? 'http://localhost:4200';
@@ -65,6 +65,23 @@ $app->add(function (ServerRequestInterface $request, RequestHandlerInterface $ha
 		->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
 		->withHeader('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, Origin, X-Requested-With')
 		->withHeader('Vary', 'Origin');
+}); */
+
+$app->add(function (Request $request, RequestHandler $handler): Response {
+    $response = $handler->handle($request);
+    
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+        ->withHeader('Access-Control-Allow-Credentials', 'true');
 });
 
+$app->options('/{routes:.+}', function (Request $request, Response $response, array $args): Response {
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+        ->withHeader('Access-Control-Allow-Credentials', 'true');
+});
 $app->run();
